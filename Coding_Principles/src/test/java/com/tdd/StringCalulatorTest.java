@@ -12,6 +12,9 @@ class StringCalulatorTest {
         //Test for single-digit value
         Assertions.assertEquals(1,sc.getResult("1"));
 
+        //Given two numbers separated by comma,result should be addition of those
+        Assertions.assertEquals(3, sc.getResult("1,2"));
+
     }
 
 
