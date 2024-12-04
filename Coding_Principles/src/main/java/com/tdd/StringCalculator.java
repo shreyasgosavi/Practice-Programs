@@ -9,7 +9,14 @@ public class StringCalculator {
         if(input.isEmpty() || input.isBlank()){
             return 0;
         }
-        return Integer.valueOf(input);
+
+        String[] numbers = input.split(",");
+        int sum = 0;
+
+        for(String s : numbers){
+            sum += Integer.valueOf(s);
+        }
+        return sum;
     }
 
 }
