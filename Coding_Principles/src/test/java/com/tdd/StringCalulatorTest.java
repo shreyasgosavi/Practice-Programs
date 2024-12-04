@@ -24,6 +24,9 @@ class StringCalulatorTest {
 
         //Handle cases where no number is specified between commas & a number at the end
         Assertions.assertEquals(9, sc.getResult("2  ,2,,,5"));
+
+        //If there are characters other than numbers ignore/skip it & consider subsequent numbers | Optional -- print values that were not considered
+        Assertions.assertEquals(3, sc.getResult("1,2,5 ddc"));
     }
 
 
