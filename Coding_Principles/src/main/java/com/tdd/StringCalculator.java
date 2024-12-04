@@ -6,15 +6,13 @@ public class StringCalculator {
 
     public int getResult(String input){
 
-        if(input.isEmpty() || input.isBlank()){
+        if(input.isEmpty()){
             return 0;
         }
-
         String[] numbers = input.split(",");
         int sum = 0;
-
         for(String s : numbers){
-            sum += Integer.valueOf(s);
+            sum += Integer.valueOf(s.trim());
         }
         return sum;
     }

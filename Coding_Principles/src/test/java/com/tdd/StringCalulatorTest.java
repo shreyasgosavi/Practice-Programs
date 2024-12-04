@@ -18,6 +18,7 @@ class StringCalulatorTest {
 
         //Ignore White Spaces that are added in the string, just consider number
         Assertions.assertEquals(4, sc.getResult("2   ,  2"));
+
     }
 
 
