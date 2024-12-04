@@ -26,8 +26,13 @@ class StringCalulatorTest {
         Assertions.assertEquals(9, sc.getResult("2  ,2,,,5"));
 
         //If there are characters other than numbers ignore/skip it & consider subsequent numbers | Optional -- print values that were not considered
-        Assertions.assertEquals(3, sc.getResult("1,2,5 ddc"));
+        Assertions.assertEquals(4, sc.getResult("2,1,5%$ddc,three,1"));
+
+        //Not allowing negative numbers, should throw an exception
+        //Added lambda expression as assert-Throws expects executable
+        Assertions.assertThrows(IllegalArgumentException.class, ()->{sc.getResult("-3,5");});
+
+
+
     }
-
-
 }
