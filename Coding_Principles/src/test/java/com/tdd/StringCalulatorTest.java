@@ -30,7 +30,7 @@ class StringCalulatorTest {
 
         //Not allowing negative numbers, should throw an exception
         //Added lambda expression as assert-Throws expects executable
-        Assertions.assertThrows(IllegalArgumentException.class, ()->{sc.getResult("-3,5");});
+        Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult("-3,5");});
 
 
 

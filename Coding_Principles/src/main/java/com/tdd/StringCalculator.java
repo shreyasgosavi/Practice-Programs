@@ -17,11 +17,19 @@ public class StringCalculator {
 
         int sum = 0;
         for(String s : numbers){
-
             //Adding exceptional-handling to take care of values other than integers
             try {
+
+                int number = Integer.parseInt(s.trim());
+                if(number < 0){
+                    throw new ArithmeticException("Negative numbers not allowed");
+                }
                 sum += Integer.valueOf(s.trim());
-            }catch(Exception e){
+            }
+            catch(ArithmeticException arithmeticException){
+                throw new ArithmeticException("Negative numbers not allowed");
+            }
+            catch (Exception e){
                 ignoredValue.add(s);
             }
         }
