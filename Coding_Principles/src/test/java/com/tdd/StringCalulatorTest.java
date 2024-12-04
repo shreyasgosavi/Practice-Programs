@@ -5,7 +5,7 @@ class StringCalulatorTest {
 
     StringCalculator sc = new StringCalculator();
     @Test
-    void getResultTest(String numbers){
+    void getResultTest(){
 
         //Test for empty-string
         Assertions.assertEquals(0, sc.getResult(""));
