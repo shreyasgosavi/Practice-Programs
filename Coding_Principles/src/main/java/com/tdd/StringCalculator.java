@@ -12,16 +12,24 @@ public class StringCalculator {
             return 0;
         }
 
-        String[] numbers = input.split(",+", 0);
+        String delimiter=",";
+        String inputString = input;
+
+        if(input.contains("~")) {
+            //Introducing delimiter
+            String[] seperatedContent = input.split("~");
+            delimiter = seperatedContent[0];
+            inputString = seperatedContent[1];
+        }
+
+        String[] numbers = inputString.split(delimiter + "+", 0);
         ArrayList<String> ignoredValue = new ArrayList<>();
         ArrayList<Integer> negativeValue = new ArrayList<>();
 
         int sum = 0;
-
         for (String s : numbers) {
             //Adding exceptional-handling to take care of values other than integers
             try {
-
                 int number = Integer.parseInt(s.trim());
                 if (number < 0) {
                     negativeValue.add(number);

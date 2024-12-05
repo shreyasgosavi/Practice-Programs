@@ -1,4 +1,5 @@
 package com.tdd;
+import com.sun.source.tree.AssertTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 class StringCalulatorTest {
@@ -33,17 +34,14 @@ class StringCalulatorTest {
         Exception e = Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult("-3,5,-6,3");});
 
         //Displaying -ve values in exception-message
-        //Java produces error while matching ',' in the substring as it considers zero-space between ',' & number
-        //So normalising it before testing
-        String normalized = e.getMessage().replaceAll("\\s+", "");
-        Assertions.assertNotEquals(-1,normalized.indexOf("[-3,-6]"));
+        Assertions.assertTrue(e.getMessage().contains("[-3, -6]"));
 
         //Adding custom Delimiter at the beginning with rule that it should be seperated with ~ & the
         //entire string should contain single ~ if not mentioned then default is ','
-        Assertions.assertEquals(9,normalized.indexOf(";~3;6"));
+        Assertions.assertEquals(9,sc.getResult(";~3;6"));
 
-
-
+        Exception exception = Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult(";~3;6;-2");});
+        Assertions.assertTrue(exception.getMessage().contains("[-2]"));
 
     }
 }
