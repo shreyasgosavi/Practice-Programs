@@ -38,6 +38,11 @@ class StringCalulatorTest {
         String normalized = e.getMessage().replaceAll("\\s+", "");
         Assertions.assertNotEquals(-1,normalized.indexOf("[-3,-6]"));
 
+        //Adding custom Delimiter at the beginning with rule that it should be seperated with ~ & the
+        //entire string should contain single ~ if not mentioned then default is ','
+        Assertions.assertEquals(9,normalized.indexOf(";~3;6"));
+
+
 
 
     }
