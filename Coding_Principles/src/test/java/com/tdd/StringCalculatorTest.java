@@ -80,5 +80,10 @@ class StringCalculatorTest {
         Assertions.assertEquals(15,sc.getResult(";~3;;;6;;6"));
     }
 
+    @Test
+    void getResultAddMultipleDelimiter(){
+        // Add multiple delimiter separated by [d1][d2] before ~  And delimiter should occur once
+        Assertions.assertEquals(18,sc.getResult("[;][:][.][%]~3;;;6;;:6:3"));
+    }
 
 }
