@@ -70,9 +70,14 @@ class StringCalculatorTest {
         //Adding custom Delimiter at the beginning with rule that it should be seperated with ~ & the
         //entire string should contain single ~ if not mentioned then default is ','
         Assertions.assertEquals(9,sc.getResult(";~3;6"));
-
         Exception exception = Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult(";~3;6;-2");});
         Assertions.assertTrue(exception.getMessage().contains("[-2]"));
+    }
+
+    @Test
+    void getResultHandleWhereDelimiterIsMoreThanSingleCharacter(){
+        // Even single delimiter can handle multiple occurrence of that delimiter
+        Assertions.assertEquals(15,sc.getResult(";~3;;;6;;6"));
     }
 
 
