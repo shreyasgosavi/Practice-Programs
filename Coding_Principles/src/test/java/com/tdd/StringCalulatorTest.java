@@ -33,7 +33,10 @@ class StringCalulatorTest {
         Exception e = Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult("-3,5,-6,3");});
 
         //Displaying -ve values in exception-message
-        Assertions.assertNotEquals(-1,e.getMessage().indexOf("[-3,-6]"));
+        //Java produces error while matching ',' in the substring as it considers zero-space between ',' & number
+        //So normalising it before testing
+        String normalized = e.getMessage().replaceAll("\\s+", "");
+        Assertions.assertNotEquals(-1,normalized.indexOf("[-3,-6]"));
 
 
 
