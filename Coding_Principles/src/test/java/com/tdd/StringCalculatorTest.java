@@ -92,6 +92,24 @@ class StringCalculatorTest {
         Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
     }
 
+    @Test
+    void checkValidDelimiterListValue(){
+        Assertions.assertTrue(sc.checkValidDelimiterList("[;][:][\"]"));
+    }
+
+    @Test
+    void checkInvalidDelimiterListValue(){
+        Assertions.assertFalse(sc.checkValidDelimiterList("[;]:][{][}]"));
+    }
+
+    @Test
+    void checkDelimiterOfLengthMoreThanOneInBetweenSquareBrackets(){
+        //Here Delimiter of more than one length is added eg ";;","{}"
+        Assertions.assertTrue(sc.checkValidDelimiterList("[;;][{}][}]"));
+    }
+
+
+
 
 
 
