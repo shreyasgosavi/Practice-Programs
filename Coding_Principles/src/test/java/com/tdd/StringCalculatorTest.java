@@ -49,9 +49,15 @@ class StringCalculatorTest {
     @Test
     void getResultAndIgnoreValuesWhichAreNotNumbers(){
 
-        //If there are characters other than numbers ignore/skip it & consider subsequent numbers | Optional -- print values that were not considered
-        Assertions.assertEquals(4, sc.getResult("2,1,5%$ddc,three,1"));
+        //OLD       -- If there are characters other than numbers ignore/skip it & consider subsequent numbers | Optional -- print values that were not considered
+//        Assertions.assertEquals(4, sc.getResult("2,1,5%$ddc,three,1"));
+
+        //NEW
+
+        Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult("2,1,5%$ddc,three,1");});
+
     }
+
 
     @Test
     void throwAnExceptionForNegativeNumberAndADDTheValueInExceptionMessage(){
@@ -90,11 +96,18 @@ class StringCalculatorTest {
 
 
     @Test
-    void ifNoProperPatternIsPresentThenOutputZero(){
+    void ifNoProperPatternIsPresentThenThrowException(){
 
+        //OLD
         // Here no ~ symbol is there so default delimiter is ',' but the string contains characters other than
         //',' so it is a valid string, hence return 0 as the answer.
-        Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
+//        Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
+
+        //NEW
+        // Here no ~ symbol is there so default delimiter is ',' but the string contains characters other than',' so it is not a valid string, hence throw exception.
+//        Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
+
+        Assertions.assertThrows(ArithmeticException.class, ()->{sc.getResult("3;;;6;;:6:3");});
     }
 
     @Test

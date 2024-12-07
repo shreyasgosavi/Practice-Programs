@@ -63,7 +63,7 @@ public class StringCalculator {
 
         String[] numbers = inputString.split(delimiter, 0);
 
-        List<String> finalNumber = Arrays.stream(numbers).filter((number)->{ return number!="";}).collect(Collectors.toList());
+        List<String> finalNumber = Arrays.stream(numbers).filter(number->{ return number!="";}).collect(Collectors.toList());
 
         System.out.println("Numbers after splitting "+finalNumber);
         ArrayList<String> ignoredValue = new ArrayList<>();
@@ -85,7 +85,16 @@ public class StringCalculator {
             }
         }
 
+        StringBuffer exceptionMessages = new StringBuffer();
         if(!negativeValue.isEmpty()){
+            exceptionMessages.append("Negative numbers involved in the list : "+negativeValue);
+            exceptionMessages.append("\n");
+        }
+        if(!ignoredValue.isEmpty()){
+            exceptionMessages.append("Delimiters may not be specified correctly or Value not specified properly : "+negativeValue);
+        }
+
+        if(!negativeValue.isEmpty() || !ignoredValue.isEmpty()){
             throw new ArithmeticException("Negative numbers involved in the list : "+negativeValue);
         }
 
