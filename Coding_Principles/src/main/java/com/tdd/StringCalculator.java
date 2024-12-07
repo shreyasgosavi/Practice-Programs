@@ -18,6 +18,7 @@ public class StringCalculator {
         }
 
         String delimiter=",+";
+
         String inputString = input;
 
         if(input.contains("~")) {
@@ -30,24 +31,32 @@ public class StringCalculator {
             if(checkValidDelimiterList(seperatedContent[0])){
 
                 StringBuffer newDelimiter = new StringBuffer();
+                StringBuffer sb = new StringBuffer();
 
                 delimiter = seperatedContent[0];
+
                 int delimiterLength = delimiter.length();
-                int iterate = 1;
+                int iterate = 0;
 
                 while(iterate < delimiterLength){
-                    newDelimiter.append(Pattern.quote(""+delimiter.charAt(iterate)));
-//                    newDelimiter.append((""+delimiter.charAt(iterate))+"+");
 
-                    iterate+=3;
+                    char tempChar = delimiter.charAt(iterate);
+                    iterate++;
 
-                    if( iterate < delimiterLength ){
-                        newDelimiter.append("|");
-                    };
+                    if(tempChar != ']'){
+                        sb.append(tempChar);
+                    }
+                    else{
+                        sb.deleteCharAt(0);
+                        newDelimiter.append(Pattern.quote(sb.toString())+"+");
+
+                        if(iterate < delimiterLength)
+                            newDelimiter.append("|");
+                        sb.setLength(0);
+                    }
                 }
+                delimiter=newDelimiter.toString();
 
-                delimiter = newDelimiter.toString();
-                System.out.println("Delimiter List "+delimiter);
             }
 
         }
@@ -85,7 +94,7 @@ public class StringCalculator {
 
 
     public boolean checkValidDelimiterList(String delimiterList){
-        Pattern pattern = Pattern.compile("(\\[[^\\]0-9]\\])+");
+        Pattern pattern = Pattern.compile("(\\[[^\\]0-9]+])+");
         Matcher matcher = pattern.matcher(delimiterList);
         return matcher.matches();
     }
