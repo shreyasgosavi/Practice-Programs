@@ -54,7 +54,7 @@ class StringCalculatorTest {
     }
 
     @Test
-    void getResultThrowExceptionForNegativeNumberAndADDTheValueInExceptionMessage(){
+    void throwAnExceptionForNegativeNumberAndADDTheValueInExceptionMessage(){
 
         //Not allowing negative numbers, should throw an exception
         //Added lambda expression as assert-Throws expects executable
@@ -75,20 +75,25 @@ class StringCalculatorTest {
     }
 
     @Test
-    void getResultHandleWhereDelimiterIsMoreThanSingleCharacter(){
+    void getResultAndHandleWhereThereAreConsecutiveDelimiters(){
+
         // Even single delimiter can handle multiple occurrence of that delimiter
         Assertions.assertEquals(15,sc.getResult("[;]~3;;;6;;6"));
     }
 
     @Test
-    void getResultAddMultipleDelimiter(){
+    void addMultipleDelimiter(){
         // Add multiple delimiter separated by [d1][d2] before ~  And delimiter should occur once
         Assertions.assertEquals(18,sc.getResult("[;][:][.][%]~3;;;6;;:6:3"));
     }
 
+
+
     @Test
-    void getResultIfNoProperPatternIsPresentThenOutputZero(){
-        // Add multiple delimiter separated by [d1][d2] before ~  And delimiter should occur once
+    void ifNoProperPatternIsPresentThenOutputZero(){
+
+        // Here no ~ symbol is there so default delimiter is ',' but the string contains characters other than
+        //',' so it is a valid string, hence return 0 as the answer.
         Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
     }
 
@@ -108,7 +113,11 @@ class StringCalculatorTest {
         Assertions.assertTrue(sc.checkValidDelimiterList("[;;][{}][}]"));
     }
 
-
+    @Test
+    void checkCorrectAnswer(){
+        // Add multiple delimiter separated by [d1][d2] before ~  And delimiter should occur once
+        Assertions.assertEquals(75,sc.getResult("[{#][%%][+]~3{####{#6%%{#63+3"));
+    }
 
 
 
