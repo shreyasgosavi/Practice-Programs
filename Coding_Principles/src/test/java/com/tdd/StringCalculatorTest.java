@@ -86,10 +86,15 @@ class StringCalculatorTest {
         Assertions.assertEquals(18,sc.getResult("[;][:][.][%]~3;;;6;;:6:3"));
     }
 
-//    @Test
-//    void getResultIfNoProperPatternIsPresentThenOutputZero(){
-//        // Add multiple delimiter separated by [d1][d2] before ~  And delimiter should occur once
-//        Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
-//    }
+    @Test
+    void getResultIfNoProperPatternIsPresentThenOutputZero(){
+        // Add multiple delimiter separated by [d1][d2] before ~  And delimiter should occur once
+        Assertions.assertEquals(0,sc.getResult("3;;;6;;:6:3"));
+    }
+
+
+
+
+
 
 }

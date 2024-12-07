@@ -36,8 +36,14 @@ public class StringCalculator {
                 int iterate = 1;
 
                 while(iterate < delimiterLength){
-                    newDelimiter.append(Pattern.quote(""+delimiter.charAt(iterate))+"+|");
+                    newDelimiter.append(Pattern.quote(""+delimiter.charAt(iterate)));
+//                    newDelimiter.append((""+delimiter.charAt(iterate))+"+");
+
                     iterate+=3;
+
+                    if( iterate < delimiterLength ){
+                        newDelimiter.append("|");
+                    };
                 }
 
                 delimiter = newDelimiter.toString();
