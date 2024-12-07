@@ -133,6 +133,10 @@ class StringCalculatorTest {
     }
 
 
+    @Test
+    void ignoreValueGreaterThan1000(){
+        Assertions.assertEquals(5,sc.getResult("3,1,10002,1"));
+    }
 
 
 
