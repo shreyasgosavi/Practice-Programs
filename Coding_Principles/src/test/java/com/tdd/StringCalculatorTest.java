@@ -1,4 +1,5 @@
 package com.tdd;
+import com.tdd.customexception.InvalidDelimiterException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 class StringCalculatorTest {
@@ -142,7 +143,7 @@ class StringCalculatorTest {
     void throwExceptionOfWhenDelimiterListIsInvalidIfSpecifiedUsingTilde(){
 
         // Add invalid-delimiter before '~', it should throw exception
-        Assertions.assertThrows(ArithmeticException.class,()->{sc.getResult("wfwesd~76");});
+        Assertions.assertThrows(InvalidDelimiterException.class,()->{sc.getResult("wfwesd~76");});
     }
 
 

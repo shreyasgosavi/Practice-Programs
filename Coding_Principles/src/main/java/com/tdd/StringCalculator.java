@@ -1,5 +1,8 @@
 package com.tdd;
 
+import com.tdd.Constants.ConstantValues;
+import com.tdd.customexception.InvalidDelimiterException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,6 +74,9 @@ public class StringCalculator {
                 }
                 delimiter=newDelimiter.toString();
 
+            }
+            else{
+                throw new InvalidDelimiterException(ConstantValues.INVALID_DELIMITER_EXCEPTION_MESSAGE);
             }
 
         }
