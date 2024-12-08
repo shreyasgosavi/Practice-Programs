@@ -9,7 +9,23 @@ import java.util.stream.Collectors;
 
 public class StringCalculator {
 
-    // Goal : To take input as a string which will tell what operation to perform with subsequent  numbers separated by delimiter mentioned in the input itself.
+    // Goal : To take input as a string which will have delimiters specified between [] followed by a boundary '~' after that there will be subsequent numbers separated by those delimiters.
+
+   /*
+    Points :
+        1. We need to find addition of numbers separated by those delimiters.
+        2. If incorrect value is present between delimiters then raise an exception & add those values in the exception message.
+           Eg. If delimiter is '{}' & string is '3{}4{}$5'
+
+           Input String --> "[{}]~3{}4{}$5"
+
+           --> Raise exception and add that value in the message.
+
+
+        3. If no delimiter is specified then consider ','  as default delimiter.
+        3. Don't allow negative numbers, if present add that as well in the exception message
+        4. If number is greater than 1000 then ignore that number and add other values.
+    */
 
     public int getResult(String input) {
 
@@ -18,13 +34,11 @@ public class StringCalculator {
         }
 
         String delimiter=",+";
-
         String inputString = input;
 
         if(input.contains("~")) {
 
             String[] seperatedContent = input.split("~");
-
             inputString = seperatedContent[1];
 
             //Checking if delimiter-list is correct or not
@@ -63,7 +77,7 @@ public class StringCalculator {
 
         String[] numbers = inputString.split(delimiter, 0);
 
-        List<String> finalNumber = Arrays.stream(numbers).filter(number->{ return number!="";}).collect(Collectors.toList());
+        List<String> finalNumber = Arrays.stream(numbers).filter(number-> number!="").collect(Collectors.toList());
 
         System.out.println("Numbers after splitting "+finalNumber);
         ArrayList<String> ignoredValue = new ArrayList<>();
@@ -78,7 +92,8 @@ public class StringCalculator {
                 if (number < 0) {
                     negativeValue.add(number);
                 }
-                sum += number;
+                if(number < 1000)
+                    sum += number;
             } catch (Exception e) {
                 System.out.println(s);
                 ignoredValue.add(s);
