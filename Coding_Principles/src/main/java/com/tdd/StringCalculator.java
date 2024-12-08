@@ -36,7 +36,7 @@ public class StringCalculator {
             return 0;
         }
 
-        String delimiter=",+";
+        String delimiter=",+|\n+";
         String inputString = input;
 
         if(input.contains("~")) {
@@ -66,12 +66,14 @@ public class StringCalculator {
                     else{
                         sb.deleteCharAt(0);
                         newDelimiter.append(Pattern.quote(sb.toString())+"+");
+                        newDelimiter.append("|");
 
-                        if(iterate < delimiterLength)
-                            newDelimiter.append("|");
+//                        if(iterate < delimiterLength)
+//                            newDelimiter.append("|");
                         sb.setLength(0);
                     }
                 }
+                newDelimiter.append(Pattern.quote("\n")+"+");
                 delimiter=newDelimiter.toString();
 
             }
@@ -112,11 +114,11 @@ public class StringCalculator {
             exceptionMessages.append("\n");
         }
         if(!ignoredValue.isEmpty()){
-            exceptionMessages.append("Delimiters may not be specified correctly or Value not specified properly : "+negativeValue);
+            exceptionMessages.append("Delimiters may not be specified correctly between numbers or Value specified is not a valid number. List of invalid values : "+ignoredValue);
         }
 
         if(!negativeValue.isEmpty() || !ignoredValue.isEmpty()){
-            throw new ArithmeticException("Negative numbers involved in the list : "+negativeValue);
+            throw new ArithmeticException(exceptionMessages.toString());
         }
 
         return sum;
