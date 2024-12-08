@@ -5,6 +5,7 @@ import com.tdd.customexception.InvalidDelimiterException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -31,50 +32,22 @@ public class StringCalculator {
 
     public int getResult(String input) {
 
-        if (input == null || input.isEmpty()) {
+        if (Objects.isNull(input) || input.isEmpty()) {
             return 0;
         }
 
-        String delimiter=",+|\n+";
+        String delimiter = ",+|\n+";
         String inputString = input;
 
-        if(input.contains("~")) {
+        if (input.contains("~")) {
 
             String[] seperatedContent = input.split("~");
             inputString = seperatedContent[1];
 
             //Checking if delimiter-list is correct or not
-            if(checkValidDelimiterList(seperatedContent[0])){
-
-                StringBuilder newDelimiter = new StringBuilder();
-                StringBuilder sb = new StringBuilder();
-
-                delimiter = seperatedContent[0];
-
-                int delimiterLength = delimiter.length();
-                int iterate = 0;
-
-                while(iterate < delimiterLength){
-
-                    char tempChar = delimiter.charAt(iterate);
-                    iterate++;
-
-                    if(tempChar != ']'){
-                        sb.append(tempChar);
-                    }
-                    else{
-                        sb.deleteCharAt(0);
-                        newDelimiter.append(Pattern.quote(sb.toString())+"+");
-                        newDelimiter.append("|");
-
-                        sb.setLength(0);
-                    }
-                }
-                newDelimiter.append(Pattern.quote("\n")+"+");
-                delimiter=newDelimiter.toString();
-
-            }
-            else{
+            if (checkValidDelimiterList(seperatedContent[0])) {
+                delimiter = generateDelimiterList(seperatedContent[0]);
+            } else {
                 throw new InvalidDelimiterException(ConstantValues.INVALID_DELIMITER_EXCEPTION_MESSAGE);
             }
 
@@ -82,22 +55,24 @@ public class StringCalculator {
 
         String[] numbers = inputString.split(delimiter, 0);
 
-        List<String> finalNumber = Stream.of(numbers).filter(number-> !number.isEmpty()).toList();
+        List<String> finalNumber = Stream.of(numbers).filter(number -> !number.isEmpty()).toList();
 
-        System.out.println("Numbers after splitting "+finalNumber);
+        System.out.println("Numbers after splitting " + finalNumber);
         ArrayList<String> ignoredValue = new ArrayList<>();
         ArrayList<Integer> negativeValue = new ArrayList<>();
 
         int sum = 0;
+
+        //Adding numbers from the generated list
         for (String s : finalNumber) {
             //Adding exceptional-handling to take care of values other than integers
             try {
                 int number = Integer.parseInt(s.trim());
-                System.out.println("Number "+number);
+                System.out.println("Number " + number);
                 if (number < 0) {
                     negativeValue.add(number);
                 }
-                if(number < 1000)
+                if (number < 1000)
                     sum += number;
             } catch (Exception e) {
                 System.out.println(s);
@@ -106,15 +81,15 @@ public class StringCalculator {
         }
 
         StringBuilder exceptionMessages = new StringBuilder();
-        if(!negativeValue.isEmpty()){
-            exceptionMessages.append("Negative numbers involved in the list : "+negativeValue);
+        if (!negativeValue.isEmpty()) {
+            exceptionMessages.append("Negative numbers involved in the list : " + negativeValue);
             exceptionMessages.append("\n");
         }
-        if(!ignoredValue.isEmpty()){
-            exceptionMessages.append("Delimiters may not be specified correctly between numbers or Value specified is not a valid number. List of invalid values : "+ignoredValue);
+        if (!ignoredValue.isEmpty()) {
+            exceptionMessages.append("Delimiters may not be specified correctly between numbers or Value specified is not a valid number. List of invalid values : " + ignoredValue);
         }
 
-        if(!negativeValue.isEmpty() || !ignoredValue.isEmpty()){
+        if (!negativeValue.isEmpty() || !ignoredValue.isEmpty()) {
             throw new ArithmeticException(exceptionMessages.toString());
         }
 
@@ -122,7 +97,7 @@ public class StringCalculator {
     }
 
 
-    public boolean checkValidDelimiterList(String delimiterList){
+    public boolean checkValidDelimiterList(String delimiterList) {
         Pattern pattern = Pattern.compile("(\\[[^\\]0-9]+])+");
         Matcher matcher = pattern.matcher(delimiterList);
         return matcher.matches();
