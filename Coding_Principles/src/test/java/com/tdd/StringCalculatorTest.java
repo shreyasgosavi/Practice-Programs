@@ -146,6 +146,14 @@ class StringCalculatorTest {
         Assertions.assertThrows(InvalidDelimiterException.class,()->{sc.getResult("wfwesd~76");});
     }
 
+    @Test
+    void handleNewLineInBetweenNumbers(){
+        Assertions.assertEquals(91,sc.getResult("[:]~76:2\n\n\n3:5\n5"));
+    }
 
+    @Test
+    void handleNewLineInBetweenNumbersByDefault(){
+        Assertions.assertEquals(91,sc.getResult("76,2\n\n\n3,5\n5"));
+    }
 
 }
