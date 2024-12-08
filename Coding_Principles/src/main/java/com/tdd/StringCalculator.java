@@ -4,11 +4,10 @@ import com.tdd.Constants.ConstantValues;
 import com.tdd.customexception.InvalidDelimiterException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StringCalculator {
 
@@ -47,8 +46,8 @@ public class StringCalculator {
             //Checking if delimiter-list is correct or not
             if(checkValidDelimiterList(seperatedContent[0])){
 
-                StringBuffer newDelimiter = new StringBuffer();
-                StringBuffer sb = new StringBuffer();
+                StringBuilder newDelimiter = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
 
                 delimiter = seperatedContent[0];
 
@@ -68,8 +67,6 @@ public class StringCalculator {
                         newDelimiter.append(Pattern.quote(sb.toString())+"+");
                         newDelimiter.append("|");
 
-//                        if(iterate < delimiterLength)
-//                            newDelimiter.append("|");
                         sb.setLength(0);
                     }
                 }
@@ -85,7 +82,7 @@ public class StringCalculator {
 
         String[] numbers = inputString.split(delimiter, 0);
 
-        List<String> finalNumber = Arrays.stream(numbers).filter(number-> number!="").collect(Collectors.toList());
+        List<String> finalNumber = Stream.of(numbers).filter(number-> !number.isEmpty()).toList();
 
         System.out.println("Numbers after splitting "+finalNumber);
         ArrayList<String> ignoredValue = new ArrayList<>();
@@ -108,7 +105,7 @@ public class StringCalculator {
             }
         }
 
-        StringBuffer exceptionMessages = new StringBuffer();
+        StringBuilder exceptionMessages = new StringBuilder();
         if(!negativeValue.isEmpty()){
             exceptionMessages.append("Negative numbers involved in the list : "+negativeValue);
             exceptionMessages.append("\n");
@@ -129,6 +126,33 @@ public class StringCalculator {
         Pattern pattern = Pattern.compile("(\\[[^\\]0-9]+])+");
         Matcher matcher = pattern.matcher(delimiterList);
         return matcher.matches();
+    }
+
+    public String generateDelimiterList(String inputDelimiterString) {
+
+        int iterate = 0;
+        int delimiterLength = inputDelimiterString.length();
+
+        StringBuilder tempStringBuider = new StringBuilder();
+        StringBuilder finalString = new StringBuilder();
+
+        while (iterate < delimiterLength) {
+
+            char tempChar = inputDelimiterString.charAt(iterate);
+            iterate++;
+
+            if (tempChar != ']') {
+                tempStringBuider.append(tempChar);
+            } else {
+                tempStringBuider.deleteCharAt(0);
+                finalString.append(Pattern.quote(tempStringBuider.toString()) + "+");
+                finalString.append("|");
+
+                tempStringBuider.setLength(0);
+            }
+        }
+        finalString.append(Pattern.quote("\n") + "+");
+        return finalString.toString();
     }
 
 }
