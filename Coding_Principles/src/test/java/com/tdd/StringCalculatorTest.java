@@ -138,6 +138,12 @@ class StringCalculatorTest {
         Assertions.assertEquals(5,sc.getResult("3,1,10002,1"));
     }
 
+    @Test
+    void throwExceptionOfWhenDelimiterListIsInvalidIfSpecifiedUsingTilde(){
+
+        // Add invalid-delimiter before '~', it should throw exception
+        Assertions.assertThrows(ArithmeticException.class,()->{sc.getResult("wfwesd~76");});
+    }
 
 
 
