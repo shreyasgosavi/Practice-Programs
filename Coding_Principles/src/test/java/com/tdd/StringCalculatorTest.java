@@ -163,7 +163,7 @@ class StringCalculatorTest {
 
     @Test
     void throwArithmeticExceptionWhenTildeIsMentionedAsDelimiterBetweenNumbers(){
-        Assertions.assertThrows(ArithmeticException.class,()->{sc.getResult("[:]~2:2:4~3");});
+        Assertions.assertThrows(InvalidDelimiterException.class,()->{sc.getResult("[:]~2:2:4~3");});
     }
 
 

@@ -42,14 +42,20 @@ public class StringCalculator {
         if (input.contains("~")) {
 
             String[] seperatedContent = input.split("~");
-            inputString = seperatedContent[1];
-
             //Checking if delimiter-list is correct or not
             if (checkValidDelimiterList(seperatedContent[0])) {
                 delimiter = generateDelimiterList(seperatedContent[0]);
             } else {
                 throw new InvalidDelimiterException(ConstantValues.INVALID_DELIMITER_EXCEPTION_MESSAGE);
             }
+
+            if(seperatedContent.length <= 2)
+                inputString = seperatedContent[1];
+            else{
+                throw new InvalidDelimiterException(ConstantValues.TILDE_AS_DELIMITER_EXCEPTION_MESSAGE);
+            }
+
+
 
         }
 
@@ -105,29 +111,31 @@ public class StringCalculator {
 
     public String generateDelimiterList(String inputDelimiterString) {
 
-        int iterate = 0;
-        int delimiterLength = inputDelimiterString.length();
 
-        StringBuilder tempStringBuider = new StringBuilder();
-        StringBuilder finalString = new StringBuilder();
+            int iterate = 0;
+            int delimiterLength = inputDelimiterString.length();
 
-        while (iterate < delimiterLength) {
+            StringBuilder tempStringBuider = new StringBuilder();
+            StringBuilder finalString = new StringBuilder();
 
-            char tempChar = inputDelimiterString.charAt(iterate);
-            iterate++;
+            while (iterate < delimiterLength) {
 
-            if (tempChar != ']') {
-                tempStringBuider.append(tempChar);
-            } else {
-                tempStringBuider.deleteCharAt(0);
-                finalString.append(Pattern.quote(tempStringBuider.toString()) + "+");
-                finalString.append("|");
+                char tempChar = inputDelimiterString.charAt(iterate);
+                iterate++;
 
-                tempStringBuider.setLength(0);
+                if (tempChar != ']') {
+                    tempStringBuider.append(tempChar);
+                } else {
+                    tempStringBuider.deleteCharAt(0);
+                    finalString.append(Pattern.quote(tempStringBuider.toString()) + "+");
+                    finalString.append("|");
+
+                    tempStringBuider.setLength(0);
+                }
             }
-        }
-        finalString.append(Pattern.quote("\n") + "+");
-        return finalString.toString();
+            finalString.append(Pattern.quote("\n") + "+");
+            return finalString.toString();
+
     }
 
     public static void main(String[] args) {
