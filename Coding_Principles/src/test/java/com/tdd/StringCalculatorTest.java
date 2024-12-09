@@ -156,4 +156,15 @@ class StringCalculatorTest {
         Assertions.assertEquals(91,sc.getResult("76,2\n\n\n3,5\n5"));
     }
 
+    @Test
+    void throwInvalidDelimiterExceptionWhenTildeIsMentionedInTheList(){
+        Assertions.assertThrows(InvalidDelimiterException.class,()->{sc.getResult("[:][~]~2:2:4");});
+    }
+
+    @Test
+    void throwArithmeticExceptionWhenTildeIsMentionedAsDelimiterBetweenNumbers(){
+        Assertions.assertThrows(ArithmeticException.class,()->{sc.getResult("[:]~2:2:4~3");});
+    }
+
+
 }
