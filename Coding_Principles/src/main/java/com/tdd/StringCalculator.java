@@ -57,7 +57,7 @@ public class StringCalculator {
 
         List<String> finalNumber = Stream.of(numbers).filter(number -> !number.isEmpty()).toList();
 
-        System.out.println("Numbers after splitting " + finalNumber);
+//        System.out.println("Numbers after splitting " + finalNumber);
         ArrayList<String> ignoredValue = new ArrayList<>();
         ArrayList<Integer> negativeValue = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class StringCalculator {
             //Adding exceptional-handling to take care of values other than integers
             try {
                 int number = Integer.parseInt(s.trim());
-                System.out.println("Number " + number);
+//                System.out.println("Number " + number);
                 if (number < 0) {
                     negativeValue.add(number);
                 }
@@ -128,6 +128,18 @@ public class StringCalculator {
         }
         finalString.append(Pattern.quote("\n") + "+");
         return finalString.toString();
+    }
+
+    public static void main(String[] args) {
+
+        StringCalculator stringCalculator = new StringCalculator();
+
+        System.out.println("Result : "+stringCalculator.getResult("5,3,5"));
+        System.out.println("Result : "+stringCalculator.getResult("5,3,1002"));
+        System.out.println("Result : "+stringCalculator.getResult("[:]~5:3:6"));
+        System.out.println("Result : "+stringCalculator.getResult("-5,3,1002"));
+
+
     }
 
 }
