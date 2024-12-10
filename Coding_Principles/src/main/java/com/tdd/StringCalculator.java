@@ -6,6 +6,7 @@ import com.tdd.customexception.InvalidDelimiterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -140,13 +141,56 @@ public class StringCalculator {
 
     public static void main(String[] args) {
 
+        boolean running = true;
+        int count = 0;
+
         StringCalculator stringCalculator = new StringCalculator();
+        String input = "";
+        char decision = 'N';
 
-        System.out.println("Result : "+stringCalculator.getResult("5,3,5"));
-        System.out.println("Result : "+stringCalculator.getResult("5,3,1002"));
-        System.out.println("Result : "+stringCalculator.getResult("[:]~5:3:6"));
-        System.out.println("Result : "+stringCalculator.getResult("-5,3,1002"));
+        Scanner sc  = new Scanner(System.in);
 
+        System.out.println("Welcome to String Calculator \uD83E\uDDEE !!");
+
+        System.out.println("Do read README.MD file to understand unique ways to give string input");
+
+        System.out.println("---------------------------------------------------------------------");
+
+        while(running){
+
+
+            System.out.println("Take 🎬: "+(count+1));
+            System.out.println("Enter input string : ");
+            System.out.println("Eg : Without delimiters --> '3,4' ----  Output --> 7");
+            System.out.println("Eg : With delimiters --> '[:][#]~3:4#4' ----  Output --> 11");
+
+            input=sc.next();
+
+            try{
+                int ans = stringCalculator.getResult(input);
+                System.out.println("Result after calculation is "+ans);
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            System.out.println("Want to run more calculations ? Y or N");
+            decision = sc.next().toUpperCase().charAt(0);
+
+            running= (decision=='Y')?true:false;
+            count++;
+        }
+
+        if(count < 5){
+            System.out.println("Exiting soon!! Fewer calculations made.. ");
+        }
+
+        else if(count >= 5 && count < 10){
+            System.out.println("That was a good warm-up ");
+        }
+        else{
+            System.out.println("Too many results to handle !! Hope you have kept track of all of them");
+        }
 
     }
 
